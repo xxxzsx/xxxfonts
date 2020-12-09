@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>XXXFONTS</title>
+
+    <style>
+        body {
+            background-color: #000000;
+            color: #ffffff;
+            width: 100vw;
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            font-family: sans-serif;
+        }
+
+        #input {
+            position: absolute;
+            opacity: 0;
+            z-index: -1;
+        }
+
+        #result {
+            white-space: pre;
+        }
+
+        #fontname {
+            position: absolute;
+            bottom: 2.5rem;
+            font-size: 2.5rem;
+            text-transform: uppercase;
+        }
+    </style>
+
+    <script>
+        const fontsTable = [
+
+            // Default
+            'A B C D E F G H I J K L M N O P Q R S T U V W X Y Z ' +
+            'А Б В Г Д Е Ж З И К Л М Н О П Р С Т У Ф Х Ц Ч Ш Щ Ь Э Ю Я',
+
+            // MoonWitch
+            '∀ ฿ ₵ Đ ૯ ₣ ₲ ℍ ł J ₭ Ⱡ 𝕄 ∩ Ø ₱ ㄖ ᴚ ₴ ⊥ Ʉ ᐯ ₩ Ӿ ⅄ Ⱬ ' +
+            '∀ Ɋ ฿ ₣ ɠ Ɇ ꇒ ɛ Ń Ҝ ᐯ 爪 ℍ Ø 卩 ₱ ₵ ⊥ ⅄ ꁷ Ӿ Ꮰ Ꮒ ₩ ₩ ㆳ Ɔ łᎧ 尺',
+
+            // UpsideBlood
+            '𝕍 𐐒 ૮ Ꮄ Ǝ Ⅎ ૭ Ꮒ Ꭵ ʆ ʞ ˥ ₩ И Θ Ԁ Ꭴ ᴚ $ 𐐆 ∩ Λ ₩ 𝕏 ㄚ ℤ ' +
+            '𝕍 ૭ 𐐒 Ⅎ Ꮄ Ꮛ ꊼ 3 N ʞ Λ ₩ ₦ Θ ㄩ Ꭾ ꉓ ⊥ ㄚ ῳ 𝕏 ˥T ɧ 爪 爪 ㆳ € Ꭴ𐐆 ℝ',
+
+            // AsianHaze
+            '卂 乃 ૮ ᗪ ૯ 千 Ꮆ 卄 ˥ ﾌ 片 ㄥ 爪 Ꮑ Ꭷ 卩 ㄖ 尺 丂 𐐆 Ꮼ ᐯ 山 乂 ૪ ፚ ' +
+            '卂 ᑫ 乃 ﾌ 亼 乇 ꊼ ꋰ ˥ 片 ㄥ 爪 卄 Ꭷ 卩 ᑭ ૮ 千 ૪ ㆗ 乂 丩 Ꮒ 山 山 ㆳ ヲ 㐰 尺',
+
+            // BlackTriangle
+            '▲    Σ        ӎ  ●    $ †       ' +
+            '▲    ▲ Σ      ӎ  ●    †           '
+
+        ].map(fontSet => fontSet.split(' '))
+
+        const defaults = fontsTable.shift()
+
+        let i = 0
+
+        function transformString(string) {
+            string = string.toUpperCase()
+            string = string.replace(/./g, char => fontsTable[i][defaults.indexOf(char)] || char)
+            if (i === 3)
+                string = (' ' + string + ' ').replace(/ /g, ' † ')
+
+            return string
+        }
+
+        function updateView(string) {
+            document.getElementById('result').innerText = string ? transformString(string) : '|'
+            document.getElementById('fontname').innerText = string && ['MoonWitch', 'UpsideBlood', 'AsianHaze', 'BlackTriangle'][i]
+        }
+    </script>
+</head>
+<body>
+    <input id="input" onBlur="i = (i + 1) % 4; this.oninput(); this.focus()" oninput="updateView(this.value)" autofocus>
+    <div id="result">TYPE SOMETHING | CLICK TO SHUFFLE</div>
+    <div id="fontname"></div>
+</body>
+</html>
